@@ -11,3 +11,5 @@ password = os.getenv("POSTGRES_PASSWORD")
 engine = create_engine(f"postgresql://{user}:{password}@localhost/stock_data")
 
 FUTURES_TABLE = "futures_data"
+ARTIST_TABLE = "artist_data"
+TOY_TABLE = "toy_data"
