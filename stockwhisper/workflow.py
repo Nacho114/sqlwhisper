@@ -6,7 +6,6 @@ from llama_index.core.workflow import (
 )
 
 from stockwhisper.actor import Actor
-from stockwhisper.actors import stock_actor
 
 class UserQueryIsValidEvent(Event):
     query_str: str
@@ -17,7 +16,7 @@ class UserQueryIsNotValidEvent(Event):
 class TextToSqlEvent(Event):
     sql_str: str
 
-class MyWorkflow(Workflow):
+class SqlWhisperWorkflow(Workflow):
 
     def __init__(self, actor: Actor, timeout: int = 10, verbose: bool = False):
         super().__init__(timeout, verbose)
@@ -26,7 +25,7 @@ class MyWorkflow(Workflow):
     @step
     async def validate_user_query(self, ev: StartEvent) -> UserQueryIsValidEvent | UserQueryIsNotValidEvent:
         query_str = ev.query_str
-        print(f"Validating user query: {query_str}...")
+        print(f"Validating user query:\n {query_str}...\n")
         validator = self.actor.validate_user_query(query_str)
 
         if validator.contains_valid_query:
@@ -36,12 +35,12 @@ class MyWorkflow(Workflow):
 
     @step
     async def invalid_user_query(self, ev: UserQueryIsNotValidEvent) -> StopEvent:
-        print(f"Query Invalid: {ev.reasoning_str}")
+        print(f"Query Invalid: \n{ev.reasoning_str}")
         return StopEvent(result="Workflow complete with error.")
 
     @step
     async def convert_text_to_sql(self, ev: UserQueryIsValidEvent) -> TextToSqlEvent:
-        print("Query valid, converting to sql...")
+        print("Query valid, converting to sql...\n")
         query_str = ev.query_str
         sql_str = self.actor.generate_sql_query_with_context(query_str)
         return TextToSqlEvent(sql_str=sql_str)
@@ -49,25 +48,8 @@ class MyWorkflow(Workflow):
     @step
     async def execute_sql_query(self, ev: TextToSqlEvent) -> StopEvent:
         sql_str = ev.sql_str
-        print(f"SQL query: {sql_str}")
+        print(f"SQL query: \n{sql_str}\n")
         df = self.actor.execute_sql_query(sql_str)
-        print(df)
+        print(f"{df}\n")
         return StopEvent(result="Workflow complete.")
 
-async def main():
-
-    query_str = "Give me the last week of data for gold"
-    # query_str = "What is the meaning of lifuru?"
-
-    w = MyWorkflow(stock_actor)
-    result = await w.run(query_str=query_str)
-    print(result)
-
-if __name__ == "__main__":
-
-    import asyncio
-
-    asyncio.run(main())
-
-    # from llama_index.utils.workflow import draw_all_possible_flows
-    # draw_all_possible_flows(MyWorkflow(stock_actor), filename="basic_workflow.html")
