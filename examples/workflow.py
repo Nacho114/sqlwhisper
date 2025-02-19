@@ -6,6 +6,9 @@ async def main():
     query_str = "Give me the last week of data for gold"
     # query_str = "What is the meaning of lifuru?"
 
+    # FAILS
+    # query_str = " Give me the average of the last 5 close prices for copper"
+
     w = SqlWhisperWorkflow(stock_actor)
     result = await w.run(query_str=query_str)
     print(result)
