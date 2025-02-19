@@ -9,7 +9,7 @@ PROMPT_FOR_VALIDATING_QUERY_FOR_YFINANCE = (
     "Be very relaxed, e.g. Show me the latest silver price, should be ok" 
 )
 
-PROMPT_FOR_GENERATING_SQL_QUERY = (
+PROMPT_FOR_GENERATING_SQL_QUERY_FOR_YFINANCE = (
     "This is futures data db of financial data"
     "Hence the tickers are GC=F, SI=F, CL=F for gold, silder and copper"
 )

@@ -31,9 +31,10 @@ class UserQueryValidator(BaseModel):
 
 class Actor:
 
-    def __init__(self, table_name: str, sql_validator_prompt: str):
+    def __init__(self, table_name: str, sql_validator_prompt: str, text_to_sql_prompt: str):
         self.table_name = table_name
         self.sql_validator_prompt = sql_validator_prompt
+        self.text_to_sql_prompt = text_to_sql_prompt
         self.llm = OpenAI(temperature=0.1, model="gpt-4o-mini")
         self.sql_database = SQLDatabase(engine, include_tables=[table_name])
 
@@ -46,7 +47,6 @@ class Actor:
         assert isinstance(validator, UserQueryValidator)
 
         return validator
-
 
     def generate_sql_query(self, query_str: str) -> str:
         nl_sql_retriever = NLSQLRetriever(
@@ -61,11 +61,11 @@ class Actor:
 
         return sql_str
 
-    def generate_sql_query_with_context(self, query_str: str, context: str) -> str:
-        query_str = f"User query{query_str}\nExtra context: {context}"
+    def generate_sql_query_with_context(self, query_str: str) -> str:
+        """Generates text-to-sql with extra context"""
+        query_str = f"User query{query_str}\nExtra context: {self.text_to_sql_prompt}"
         sql_str = self.generate_sql_query(query_str)
         return sql_str
-
 
     def execute_sql_query(self, sql_str: str) -> pd.DataFrame:
         with engine.connect() as con:
