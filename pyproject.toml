@@ -12,6 +12,8 @@ yfinance = "^0.2.53"
 psycopg2 = "^2.9.10"
 pandas = "^2.2.3"
 llama-index = "^0.12.18"
+llama-index-core = "^0.12.19"
+llama-index-utils-workflow = "^0.3.0"
 
 
 [build-system]
