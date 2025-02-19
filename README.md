@@ -1,5 +1,14 @@
 # Stock Whisper
 
+## Summary
+
+This is a simple mock workflow to read from an PostgreSQL database with futures data via natural language.
+It uses llamaindex under the hood.
+
+Code found under `stockwhisper/` was written without the help of llm's
+
+Code outside it, such as that in `populate_db` was mostly written with the help of Claude.
+
 ## Setup
 
 ### Poetry
