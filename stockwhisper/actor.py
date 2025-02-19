@@ -4,6 +4,14 @@ from llama_index.llms.openai import OpenAI
 from llama_index.core.retrievers import NLSQLRetriever
 from sqlalchemy import text
 
+"""
+Main references
+
+[Structured (Pydantic) llms](https://docs.llamaindex.ai/en/stable/understanding/extraction/structured_llms/)
+[text-to-sql](https://docs.llamaindex.ai/en/stable/examples/index_structs/struct_indices/SQLIndexDemo/)
+
+"""
+
 import pandas as pd
 
 from stockwhisper.db_lib import engine
