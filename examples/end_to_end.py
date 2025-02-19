@@ -1,5 +1,4 @@
 from stockwhisper.actors import stock_actor
-from stockwhisper.prompts import PROMPT_FOR_GENERATING_SQL_QUERY
 
 def happy_path():
     print('Running AIAIAIAI')
@@ -12,7 +11,7 @@ def happy_path():
         return
 
     print("generating SQL query")
-    sql_str = stock_actor.generate_sql_query_with_context(query_str, PROMPT_FOR_GENERATING_SQL_QUERY)
+    sql_str = stock_actor.generate_sql_query_with_context(query_str)
 
     print(f"executing SQL query\n{sql_str}")
     df = stock_actor.execute_sql_query(sql_str)
