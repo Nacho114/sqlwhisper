@@ -35,6 +35,49 @@ class DatabaseConnection:
         if self.conn:
             self.conn.close()
 
+#TODO: This has not been tested! GPT Magic, i originally create the DB with raw sql
+def ensure_table_exists(self):
+    """
+    Check if futures_data table exists and create it if it doesn't
+    """
+    with self.conn.cursor() as cur:
+        # Check if table exists
+        cur.execute("""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_name = 'futures_data'
+            );
+        """)
+        table_exists = cur.fetchone()[0]
+        
+        if not table_exists:
+            logger.info("Creating futures_data table")
+            cur.execute("""
+                CREATE TABLE futures_data (
+                    id SERIAL PRIMARY KEY,
+                    symbol VARCHAR(20) NOT NULL,
+                    trade_date DATE NOT NULL,
+                    open_price NUMERIC(15, 5) NOT NULL,
+                    high_price NUMERIC(15, 5) NOT NULL,
+                    low_price NUMERIC(15, 5) NOT NULL,
+                    close_price NUMERIC(15, 5) NOT NULL,
+                    volume BIGINT NOT NULL,
+                    source VARCHAR(50) DEFAULT 'yfinance',
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    CONSTRAINT unique_symbol_date UNIQUE (symbol, trade_date)
+                );
+                
+                CREATE INDEX idx_futures_symbol ON futures_data(symbol);
+                CREATE INDEX idx_futures_date ON futures_data(trade_date);
+            """)
+            self.conn.commit()
+            logger.info("Successfully created futures_data table")
+        else:
+            logger.debug("futures_data table already exists")
+            
+    return self.conn
+
 class StockDataIngestion:
     def __init__(self, start_date: str = "1900-01-01"):
         self.start_date = start_date
