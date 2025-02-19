@@ -9,6 +9,12 @@ Code found under `stockwhisper/` was written without the help of llm's
 
 Code outside it, such as that in `populate_db` was mostly written with the help of Claude.
 
+## Missing features
+
+- Error handling (e.g. try catch during sql execution)
+- Linting/Formatting
+- Comments
+
 ## Setup
 
 ### Poetry
