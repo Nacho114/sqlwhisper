@@ -25,7 +25,7 @@ class SqlWhisperWorkflow(Workflow):
     @step
     async def validate_user_query(self, ev: StartEvent) -> UserQueryIsValidEvent | UserQueryIsNotValidEvent:
         query_str = ev.query_str
-        print(f"Validating user query:\n {query_str}...\n")
+        print(f"Validating user query:\n\n {query_str}...\n")
         validator = self.actor.validate_user_query(query_str)
 
         if validator.contains_valid_query:
@@ -35,7 +35,7 @@ class SqlWhisperWorkflow(Workflow):
 
     @step
     async def invalid_user_query(self, ev: UserQueryIsNotValidEvent) -> StopEvent:
-        print(f"Query Invalid: \n{ev.reasoning_str}")
+        print(f"Query Invalid: \n\n{ev.reasoning_str}\n\n")
         return StopEvent(result="Workflow complete with error.")
 
     @step
@@ -48,7 +48,7 @@ class SqlWhisperWorkflow(Workflow):
     @step
     async def execute_sql_query(self, ev: TextToSqlEvent) -> StopEvent:
         sql_str = ev.sql_str
-        print(f"SQL query: \n{sql_str}\n")
+        print(f"SQL query: \n\n{sql_str}\n")
         df = self.actor.execute_sql_query(sql_str)
         print(f"{df}\n")
         return StopEvent(result="Workflow complete.")
