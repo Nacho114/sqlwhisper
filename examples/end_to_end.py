@@ -1,4 +1,4 @@
-from stockwhisper.actors import stock_actor
+from sqlwhisper.actors import stock_actor
 
 def happy_path():
     print('Running AIAIAIAI')

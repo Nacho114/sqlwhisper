@@ -1,4 +1,4 @@
-from stockwhisper.actors import stock_actor
+from sqlwhisper.actors import stock_actor
 
 def correct_query():
     query_str = "Give me the last week of data for gold"

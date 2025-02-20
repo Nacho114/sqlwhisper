@@ -1,5 +1,5 @@
-from stockwhisper.workflow import SqlWhisperWorkflow
-from stockwhisper.actors import stock_actor
+from sqlwhisper.workflow import SqlWhisperWorkflow
+from sqlwhisper.actors import stock_actor
 
 async def main():
 
