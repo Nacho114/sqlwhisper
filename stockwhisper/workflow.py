@@ -42,7 +42,7 @@ class SqlWhisperWorkflow(Workflow):
     async def convert_text_to_sql(self, ev: UserQueryIsValidEvent) -> TextToSqlEvent:
         print("Query valid, converting to sql...\n")
         query_str = ev.query_str
-        sql_str = self.actor.generate_sql_query_with_context(query_str)
+        sql_str = self.actor.generate_sql_query(query_str)
         return TextToSqlEvent(sql_str=sql_str)
 
     @step

@@ -11,7 +11,7 @@ def happy_path():
         return
 
     print("generating SQL query")
-    sql_str = stock_actor.generate_sql_query_with_context(query_str)
+    sql_str = stock_actor.generate_sql_query(query_str)
 
     print(f"executing SQL query\n{sql_str}")
     df = stock_actor.execute_sql_query(sql_str)

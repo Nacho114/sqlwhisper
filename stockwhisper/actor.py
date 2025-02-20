@@ -31,7 +31,7 @@ class UserQueryValidator(BaseModel):
 
 class Actor:
 
-    def __init__(self, table_name: str, sql_validator_prompt: str, text_to_sql_prompt: str):
+    def __init__(self, table_name: str, sql_validator_prompt: str = '', text_to_sql_prompt: str = ''):
         self.table_name = table_name
         self.sql_validator_prompt = sql_validator_prompt
         self.text_to_sql_prompt = text_to_sql_prompt
@@ -39,7 +39,7 @@ class Actor:
         self.sql_database = SQLDatabase(engine, include_tables=[table_name])
 
     def validate_user_query(self, query_str: str) -> UserQueryValidator:
-        eval_query_str = f"User query validator text:{self.sql_validator_prompt}\n The user prompt is the following: {query_str}"
+        eval_query_str = f"User query validator text:{self.sql_validator_prompt}\n User prompt: {query_str}"
         sllm = self.llm.as_structured_llm(UserQueryValidator)
         response = sllm.complete(eval_query_str)
         validator = response.raw
@@ -49,6 +49,8 @@ class Actor:
         return validator
 
     def generate_sql_query(self, query_str: str) -> str:
+        query_str = f"User query{query_str}\nExtra context: {self.text_to_sql_prompt}"
+
         nl_sql_retriever = NLSQLRetriever(
             sql_database=self.sql_database, tables=[self.table_name], llm=self.llm, sql_only=True
         )
@@ -59,12 +61,6 @@ class Actor:
 
         sql_str = results[0].text
 
-        return sql_str
-
-    def generate_sql_query_with_context(self, query_str: str) -> str:
-        """Generates text-to-sql with extra context"""
-        query_str = f"User query{query_str}\nExtra context: {self.text_to_sql_prompt}"
-        sql_str = self.generate_sql_query(query_str)
         return sql_str
 
     def execute_sql_query(self, sql_str: str) -> pd.DataFrame:
