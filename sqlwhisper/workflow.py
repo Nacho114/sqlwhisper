@@ -5,7 +5,7 @@ from llama_index.core.workflow import (
     Event,
 )
 
-from stockwhisper.actor import Actor
+from sqlwhisper.actor import Actor
 
 class UserQueryIsValidEvent(Event):
     query_str: str

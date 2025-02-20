@@ -14,7 +14,7 @@ Main references
 
 import pandas as pd
 
-from stockwhisper.db_lib import engine
+from sqlwhisper.db_lib import engine
 
 class UserQueryValidator(BaseModel):
     """

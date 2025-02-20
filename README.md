@@ -1,11 +1,11 @@
-# Stock Whisper
+# SQL Whisper
 
 ## Summary
 
 This is a simple mock workflow to read from an PostgreSQL database with futures data via natural language.
 It uses llamaindex under the hood.
 
-Code found under `stockwhisper/` was written without the help of llm's
+Code found under `sqlwhisper/` was written without the help of llm's
 
 Code outside it, such as that in `populate_db` was mostly written with the help of Claude.
 
@@ -50,6 +50,6 @@ To populate the db run
 python populate_db/yfinance_loader.py
 ```
 
-### Stockwhisper
+### SQL Whisper
 
 You should now be able to run files under ```/examples```
