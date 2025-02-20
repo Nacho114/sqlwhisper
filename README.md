@@ -1,11 +1,15 @@
 # SQL Whisper
 
+![Demo Video](./demo.gif)
+
 ## Summary
 
-The project is split into two parts, a simple workflow that goes from text to `pd.DataFrame`
-and a small problem set to study edge cases in the text to sql problem space.
+The project is split into two parts:
 
-> The only code and ideas that were generated with llm's are under `populate_db`.
+1. A simple workflow that goes from text to `pd.DataFrame`
+2. A small problem set to study edge cases in the text to sql problem space.
+
+> The only code and ideas that were generated with llm's are under `populate_db` and some .md formatting.
 > Everything else was written without gpt.
 
 ### SQL Whisper
@@ -17,7 +21,7 @@ It uses llamaindex under the hood.
 
 ### Problem set
 
-The documentation for this can be found in the (problem)[./PROBLEM.md] readme.
+The documentation for this can be found here [problem](./PROBLEM.md).
 
 ## Missing features
 
