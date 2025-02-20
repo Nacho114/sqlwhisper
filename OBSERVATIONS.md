@@ -1,5 +1,11 @@
 # Prompting observations
 
+For simplicity we assume users will only as questions about a fixed column.
+
+E.g. ticker or arist name. 
+
+We assume that in this 
+
 ## Toy data
 
 ## Stock data
