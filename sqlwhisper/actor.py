@@ -30,6 +30,7 @@ class UserQueryValidator(BaseModel):
     )
 
 class Actor:
+    """The Actor class contains all actions done during the workflow."""
 
     def __init__(self, table_name: str, sql_validator_prompt: str = '', text_to_sql_prompt: str = ''):
         self.table_name = table_name

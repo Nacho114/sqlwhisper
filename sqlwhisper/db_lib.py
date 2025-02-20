@@ -8,6 +8,7 @@ load_dotenv()
 user = os.getenv("POSTGRES_USER")
 password = os.getenv("POSTGRES_PASSWORD")
 
+# TODO: hardcoded variables!
 engine = create_engine(f"postgresql://{user}:{password}@localhost/stock_data")
 
 FUTURES_TABLE = "futures_data"

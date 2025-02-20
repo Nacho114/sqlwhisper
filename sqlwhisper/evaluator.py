@@ -6,6 +6,7 @@ from sqlwhisper.text_sql_pair_examples import TextSqlPair
 
 @dataclass
 class Evaluator:
+    """To be used for the Problems"""
 
     text_sql_pairs: List[TextSqlPair]
     text_to_sql: Callable[[str], str]

@@ -6,25 +6,24 @@
 
 The project is split into two parts:
 
-1. A simple workflow that goes from text to `pd.DataFrame`
-2. A small problem set to study edge cases in the text to sql problem space.
+1. SQL Whisper: a [workflow](sqlwhisper/workflow.py) that goes from text to `pd.DataFrame`
+2. A small [problem set](./PROBLEM.md) to [study](solutions/) edge cases in the text to sql problem space.
 
 > The only code and ideas that were generated with llm's are under `populate_db` and some .md formatting.
 > Everything else was written without gpt.
 
 ### SQL Whisper
 
-This is a simple mock workflow to read from an PostgreSQL database with futures data via natural language.
-It uses llamaindex under the hood.
+1. User inputs query
+2. LLM validates it
+3. If valid, creates SQL query
+4. SQL query is executed.
 
 ![image](./workflow.png)
 
-### Problem set
-
-The documentation for this can be found here [problem](./PROBLEM.md).
-
 ## Missing features
 
+- Better file organization
 - Error handling (e.g. try catch during sql execution)
 - Linting/Formatting
 - Comments
@@ -48,19 +47,21 @@ Before running the example code the PostgreSQL server must be setup and populate
 Setup is done via docker, make sure to add the credentials in a .env file at the root of the directory.
 
 ```bash
-docker run --name stock_db -p 5432:5432 -e POSTGRES_USER=your_user -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=stock_data -v pgdata:/var/lib/postgresql/data -d postgres:latest
+docker run --name db_name -p 5432:5432 -e POSTGRES_USER=your_user -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=stock_data -v pgdata:/var/lib/postgresql/data -d postgres:latest
 ```
 
 Connect to the db to check if it's running.
 
 ```bash
-psql -h localhost -p 5432 -U nacho -d stock_data
+psql -h localhost -p 5432 -U your_user -d table_name
 ```
 
 To populate the db run 
 
 ```bash
 python populate_db/yfinance_loader.py
+python populate_db/toy_loader.py
+python populate_db/artist_loader.py
 ```
 
 ### Demo

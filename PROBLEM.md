@@ -45,4 +45,5 @@ However, without any extra context, the LLM will surely fail!
 | aaa  | 1140  |
 
 ## Bonus points
+
 How well do the solutions scale to db size?
